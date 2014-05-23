@@ -21,22 +21,21 @@ $numfields = $result->field_count;
 //printf("<br/> Result has number of fileds: %s\n", $numfields);
 $numrows = $result->num_rows;
 //printf("<br/> Result has number of rows: %s\n", $numrows);
-print "<div class'container-fluid' hidden='true'> \n" .
-      "<form role='form'>";
-for ($i=0; $i < $numfields; $i++) // Header
-{ 
-    $s = $result->fetch_field();
-    print $s->name . '  <input type="textfield" /> <br/>'; 
-    
-}
-
-print "</form> \n" .
-      "</div>";
+//print "<div class'container-fluid' hidden='true'> \n" .
+//      "<form role='form'>";
+//for ($i=0; $i < $numfields; $i++) // Header
+//{ 
+//    $s = $result->fetch_field();
+//    print $s->name . '  <input type="textfield" /> <br/>'; 
+//    
+//}
+//
+//print "</form> \n" .
+//      "</div>";
 
 print "<form role='form'>";
 print "<table class='table'>\n<tr>";
 print "<th>#</th>";
-$result = $con -> query($query);
 for ($i=0; $i < $numfields; $i++) // Header
 { 
     $d = $result->fetch_field();

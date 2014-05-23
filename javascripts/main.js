@@ -1,17 +1,17 @@
-//  window.onload = function() {
-//    document.getElementById('tables').onchange = showTable($('#tables').selectedIndex);
-//    document.getElementById('newRow').onclick = getForm;
-//};
-  
+ 
   $('document').ready(function() {
+      event.preventDefault();
       $('#tables').on('change', function() {
          showTable( this.value );
         });
-  });
-  
+        
+      $('#newRow').on('click', function() {
+        getForm($('#tables').val());
+    });
+});
   function showTable(str) {
-  if (str=="") {
-    document.getElementById("content").innerHTML="";
+  if (str==="") {
+    $("#content").html("");
     return;
   } 
   if (window.XMLHttpRequest) {
@@ -37,9 +37,31 @@ function actButton() {
     document.getElementById("deleteRow").removeAttribute("disabled");
 }
 
-function sendXHTTP(str) {
-}
 
 function getForm(str) {
-    console.log(str);
+    if (str === "") {
+        return;
+    }
+    
+    
+    $.get("/etterem/newForm.php", { table: str } )
+            .done(function( data ){
+               $('#inputForm').html("");
+               $('#inputForm').append( data );
+               $('#inputForm').removeAttr('hidden');
+            });
 }
+
+$('#inputForm').submit(function( event ){
+           event.preventDefault();
+           var $form = $( this ),
+           term = $('#inputForm').serialize(),
+           url = $form.attr('action');
+           
+           var post = $.post( url, term );
+           
+           post.done(function( data ) {
+               alert("Added New Row with data: " + data);
+           });
+
+       });

@@ -48,16 +48,11 @@
         <input type="button" class="btn btn-default" value="Töröl" disabled="disabled" id="deleteRow"/>
     </form>
 </div>
-<form role="form" hidden="hidden">
-    <div class="form-group" id="inputForm">
+<form role="form" hidden="hidden" id="inputForm" action="/etterem/addRow.php">
     
-    </div>
-    <button type="button" class="btn btn-default" value="Küldés"/>
 </form>
 
-    <div class="container input-group" id="content">
-        
-    </div>
+<div class="container" id="content"></div>
 </body>
 <script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type='text/javascript' src="/etterem/javascripts/main.js"></script>
