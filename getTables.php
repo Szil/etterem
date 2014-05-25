@@ -4,16 +4,11 @@ include './database.php';
 
 $q = \intval($_GET['q']);
 
-$con = mysqli_connect($host, $user, $password, 'etterem');
-if (!$con) {
-	die('Could not connect: ' . mysqli_error($con));
-}
-
 $table = $tables[$q];
 //echo $table . "<br/>";
 
 $query="select * from " . $table;
-$result = $con -> query($query);
+$result = doQuery($query);
 print_r($result);
 print "<hr/>";
 
@@ -32,15 +27,17 @@ $numrows = $result->num_rows;
 //
 //print "</form> \n" .
 //      "</div>";
-
-print "<form role='form'>";
+$iden = "";
+print '<input type="hidden" name="table" value="'. $table .'">';
 print "<table class='table'>\n<tr>";
 print "<th>#</th>";
 for ($i=0; $i < $numfields; $i++) // Header
 { 
     $d = $result->fetch_field();
-    print '<th>'. $d->name .'</th>'; 
-    
+    if ($i == 0) {
+        $iden = $d->name;
+    }
+    print '<th>'. $d->name .'</th>';     
 }
 
 print "</tr>\n";
@@ -48,7 +45,7 @@ print "</tr>\n";
 while ($row = $result->fetch_row()) {
     //
     print "<tr>";
-    print "<td> <input type='radio' onclick='actButton()' name='tableRow' id='" . $row[0] . "'/></td>";
+    print "<td> <input type='radio' id='row' name='". $iden ."' value='" . $row[0] . "'/></td>";
         for ($i=0; $i < $numfields; $i++) {
             printf("<td> %s </td>\n", $row[$i]);
         }
@@ -64,4 +61,5 @@ while ($row = $result->fetch_row()) {
 //}
 
 print "</table>\n";
-print "</form>";
+print '<input type="submit" value="Küldés" id="sendRow" hidden="true">';
+//print "</form>";

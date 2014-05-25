@@ -43,7 +43,7 @@
 <hr/>
 <div class="container-fluid">
     <form role="form">
-        <input type="button" class="btn btn-default" value="Új sor" id="newRow"/>
+        <input type="button" class="btn btn-default" value="Új sor" disabled="disabled" id="newRow"/>
         <input type="button" class="btn btn-default" value="Módosit" disabled="disabled" id="updateRow"/>
         <input type="button" class="btn btn-default" value="Töröl" disabled="disabled" id="deleteRow"/>
     </form>
@@ -52,7 +52,11 @@
     
 </form>
 
-<div class="container" id="content"></div>
+<div class="container">
+    <form role='form' class="content" id='rowSelect' action='/etterem/'>
+        
+    </form>
+</div>
 </body>
 <script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type='text/javascript' src="/etterem/javascripts/main.js"></script>

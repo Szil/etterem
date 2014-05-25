@@ -1,67 +1,98 @@
- 
-  $('document').ready(function() {
-      event.preventDefault();
-      $('#tables').on('change', function() {
-         showTable( this.value );
+
+$('document').ready(function() {
+    event.preventDefault();
+    $('#tables').on('change', function() {
+        showTable(this.value);
+        this.value !== "" ? $('#newRow').removeAttr('disabled') : $('#newRow').attr('disabled', 'disabled');
+        $('#inputForm').fadeOut(350, function() {
+            $(this).html("");
         });
-        
-      $('#newRow').on('click', function() {
+    });
+
+    $('#newRow').on('click', function() {
         getForm($('#tables').val());
     });
+
+    $('#deleteRow').on('click', function() {
+        $('#rowSelect').attr('action', '/etterem/deleteRow.php');
+        console.log('delete clicked');
+        $('#sendRow').trigger('click');
+    });
+
+    $('#updateRow').on('click', function() {
+        $('#rowSelect').attr('action', '/etterem/updateRow.php');
+        console.log('update clicked');
+        $('#sendRow').trigger('click');
+    });
+
+    $('#inputForm').submit(function(event) {
+        event.preventDefault();
+        var $form = $(this),
+                term = $('#inputForm').serialize(),
+                url = $form.attr('action');
+
+        var post = $.post(url, term);
+
+        post.done(function(data) {
+            alert("Added New Row with data: " + data);
+            $('#inputForm').fadeOut(350, function() {
+                $(this).html("");
+            });
+            showTable($('#tables').val());
+        });
+    });
+
+    $('#rowSelect').submit(function(event) {
+        event.preventDefault();
+        var form = $(this),
+                term = form.serialize(),
+                url = form.attr('action');
+
+        var post = $.post(url, term);
+
+        post.done(function(data) {
+            alert("Row deleted successfuly " + data);
+            showTable($('#tables').val());
+        });
+    });
 });
-  function showTable(str) {
-  if (str==="") {
-    $("#content").html("");
-    return;
-  } 
-  if (window.XMLHttpRequest) {
-    // code for IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp=new XMLHttpRequest();
-  } else { // code for IE6, IE5
-    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  xmlhttp.onreadystatechange=function() {
-    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-      document.getElementById("content").innerHTML=xmlhttp.responseText;
+
+function showTable(str) {
+    if (str === "") {
+        $("#content").html("");
+        return;
     }
-  };
-  xmlhttp.open("GET","/etterem/getTables.php?q="+str,true);
-  xmlhttp.send();
-  
-  document.getElementById("updateRow").setAttribute("disabled", "disabled");
-  document.getElementById("deleteRow").setAttribute("disabled", "disabled");
-}
 
-function actButton() {
-    document.getElementById("updateRow").removeAttribute("disabled");
-    document.getElementById("deleteRow").removeAttribute("disabled");
-}
+    var url = "/etterem/getTables.php";
 
+    var get = $.get(url, {q: str});
+
+    get.done(function(data) {
+        $('.content').html(data);
+
+        $('#rowSelect').on('change', function() {
+            $('#updateRow').removeAttr('disabled');
+            $('#deleteRow').removeAttr('disabled');
+        });
+    });
+
+    get.always(function() {
+        $('#updateRow').attr('disabled', 'disabled');
+        $('#deleteRow').attr('disabled', 'disabled');
+    });
+}
 
 function getForm(str) {
     if (str === "") {
         return;
     }
-    
-    
-    $.get("/etterem/newForm.php", { table: str } )
-            .done(function( data ){
-               $('#inputForm').html("");
-               $('#inputForm').append( data );
-               $('#inputForm').removeAttr('hidden');
+
+    $.get("/etterem/newForm.php", {table: str})
+            .done(function(data) {
+                $('#inputForm').html("");
+                $('#inputForm').fadeIn(350, function() {
+                    $(this).append(data);
+                });
+                $('#inputForm').removeAttr('hidden');
             });
 }
-
-$('#inputForm').submit(function( event ){
-           event.preventDefault();
-           var $form = $( this ),
-           term = $('#inputForm').serialize(),
-           url = $form.attr('action');
-           
-           var post = $.post( url, term );
-           
-           post.done(function( data ) {
-               alert("Added New Row with data: " + data);
-           });
-
-       });
