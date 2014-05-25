@@ -10,22 +10,30 @@ $('document').ready(function() {
     });
 
     $('#newRow').on('click', function() {
+        $('#inputForm').attr('action', '/etterem/addRow.php');
         getForm($('#tables').val());
     });
 
     $('#deleteRow').on('click', function() {
         $('#rowSelect').attr('action', '/etterem/deleteRow.php');
-        console.log('delete clicked');
         $('#sendRow').trigger('click');
     });
 
     $('#updateRow').on('click', function() {
-        $('#rowSelect').attr('action', '/etterem/updateRow.php');
-        console.log('update clicked');
-        $('#sendRow').trigger('click');
+        $('#inputForm').attr('action', '/etterem/updateRow.php');
+        var term = $('#rowSelect').serialize();
+        $.get('/etterem/getRow.php', term)
+                .done(function(data) {
+                    $('#inputForm').html("");
+                    $('#inputForm').fadeIn(350, function() {
+                        $(this).append(data);
+                    });
+                    $('#inputForm').removeAttr('hidden');
+                });
     });
 
     $('#inputForm').submit(function(event) {
+        $('#inputForm').find(':input:disabled').removeAttr('disabled');
         event.preventDefault();
         var $form = $(this),
                 term = $('#inputForm').serialize(),
@@ -34,7 +42,7 @@ $('document').ready(function() {
         var post = $.post(url, term);
 
         post.done(function(data) {
-            alert("Added New Row with data: " + data);
+            alert(data);
             $('#inputForm').fadeOut(350, function() {
                 $(this).html("");
             });

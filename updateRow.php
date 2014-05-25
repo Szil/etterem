@@ -2,29 +2,32 @@
 
 include './database.php';
 
-$q = \intval($_GET['table']);
+$form = $_POST;
+$table = $_POST['table'];
 
-$table = $tables[$q];
-print '<input type="hidden" class="form-control" name="table" value="'. $q .'">';
-$query="select * from " . $table;
-$result = doQuery($query);
-
-$numfields = $result->field_count;
-
-for ($i=0; $i < $numfields; $i++) // Header
-{ 
-    $s = $result->fetch_field();
-    $name = $s->name;
-    if ($i == 0) {
-        print '<div class="form-group">' .
-          '<label>' . $name . '</label>' .
-          '<input type="textfield" class="form-control" name="'.$name.'" disabled="disabled">' .
-          '</div>';
+    printf("Table name: %s \n", $table);
+unset($form['table']);
+$query = "UPDATE " . $table;
+$idRow = 0;
+$len = count($form);
+$set = "";
+$idCol = "";
+$idVal = "";
+foreach ($form as $column => $value) {
+    if ($idRow == 0) {
+        $idCol = $column;
+        $idVal = $value;
+        $idRow++;
     } else {
-        print '<div class="form-group">' .
-          '<label>' . $name . '</label>' .
-          '<input type="textfield" class="form-control" name="'.$name.'">' .
-          '</div>'; 
-    }   
+        if ($len > 1) {
+            $set = $set . $column . "='". $value ."',";
+        } else {
+            $set = $set . $column . "='". $value ."'";   
+        } 
+    }
+    $len--;
 }
-print '<input type="submit" class="btn btn-default" value="Küldés" id="sendForm">';
+
+$query = $query . " SET " . $set . " WHERE ".$idCol."='".$idVal."';";
+doQuery($query);
+print "Query done with: " . $query;

@@ -20,7 +20,7 @@
     <div>
         <ul class="nav nav-tabs" role="navigation">
             <li class="active"><a href="/etterem/">Home</a></li>
-            <li><a href="#">News</a></li>
+            <li><a href="https://github.com/Szil/etterem">Github Repo</a></li>
             <li><a href="#">Contact</a></li>
             <li><a href="#">About</a></li>
         </ul>
@@ -48,7 +48,7 @@
         <input type="button" class="btn btn-default" value="Töröl" disabled="disabled" id="deleteRow"/>
     </form>
 </div>
-<form role="form" hidden="hidden" id="inputForm" action="/etterem/addRow.php">
+<form role="form" hidden="hidden" id="inputForm" action="/etterem/">
     
 </form>
 

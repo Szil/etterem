@@ -32,3 +32,4 @@ foreach ($form as $column => $value) {
 
 $query = $query . " ( " . $colNames . " ) VALUES ( " . $values . " );";
 doQuery($query);
+print "Query done with: " . $query;
