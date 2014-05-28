@@ -18,10 +18,10 @@
 
             <div>
                 <ul class="nav nav-tabs" role="navigation">
-                    <li class="active"><a href="/etterem/">Home</a></li>
+                    <li class="active"><a href="/etterem/zh/">Home</a></li>
                     <li><a href="https://github.com/Szil/etterem">Github Repo</a></li>
-                    <!--            <li><a href="#">Contact</a></li>
-                                <li><a href="#">About</a></li>-->
+                    <li><a href="http://szil.kd.io/etterem/">Main Site</a></li>
+                    <li><a href="#">About</a></li>
                 </ul>
             </div>
         </nav>
@@ -39,15 +39,11 @@
                 
             </form>
         </div>
-        <form role="form" hidden="hidden" id="inputForm" action="/etterem/">
-
-        </form>
-
-        <div class="container">
-            <form role='form' class="content" id='rowSelect' action='/etterem/'>
-
-            </form>
+        <hr/>
+        <div class="container" id="recept">
+ 
         </div>
+        
     </body>
     <script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type='text/javascript' src="/etterem/zh/zh.js"></script>
