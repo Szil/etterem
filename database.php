@@ -1,8 +1,8 @@
 <?php
 
-$host = "localhost:3306";
+$host = "localhost";
 $user = "root";
-$password = "root";
+$password = "oathK33pER";
 
 $tables = array(
     1 => "fajta",
