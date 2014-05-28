@@ -21,8 +21,8 @@
         <ul class="nav nav-tabs" role="navigation">
             <li class="active"><a href="/etterem/">Home</a></li>
             <li><a href="https://github.com/Szil/etterem">Github Repo</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">About</a></li>
+<!--            <li><a href="#">Contact</a></li>
+            <li><a href="#">About</a></li>-->
         </ul>
     </div>
 </nav>
